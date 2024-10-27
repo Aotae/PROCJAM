@@ -1,0 +1,115 @@
+[gd_scene load_steps=18 format=3 uid="uid://b0wcwam5iqybd"]
+
+[ext_resource type="Texture2D" uid="uid://coo61irgfulks" path="res://art/TempPlayerSprite/BeekGuyBack1.png" id="1_p8ui7"]
+[ext_resource type="Texture2D" uid="uid://bvghck8tkkx3r" path="res://art/TempPlayerSprite/BeekGuyBack2.png" id="2_rbwh8"]
+[ext_resource type="Texture2D" uid="uid://c7wqngynpd4o1" path="res://art/TempPlayerSprite/BeekGuyBackLeft1.png" id="3_vi0pr"]
+[ext_resource type="Texture2D" uid="uid://dfwoa3vxan4pe" path="res://art/TempPlayerSprite/BeekGuyBackLeft2.png" id="4_gn2eb"]
+[ext_resource type="Texture2D" uid="uid://b0ar874rryduo" path="res://art/TempPlayerSprite/BeekGuyBackRight1.png" id="5_1u76s"]
+[ext_resource type="Texture2D" uid="uid://c5gcpew2e3nfy" path="res://art/TempPlayerSprite/BeekGuyBackRight2.png" id="6_78cwo"]
+[ext_resource type="Texture2D" uid="uid://bejoj7oue23cb" path="res://art/TempPlayerSprite/BeekGuyFront1.png" id="7_2305v"]
+[ext_resource type="Texture2D" uid="uid://vg6lvjvxk0ms" path="res://art/TempPlayerSprite/BeekGuyFront2.png" id="8_bli75"]
+[ext_resource type="Texture2D" uid="uid://dqjqdik27jyr7" path="res://art/TempPlayerSprite/BeekGuyFrontLeft1.png" id="9_ecx2b"]
+[ext_resource type="Texture2D" uid="uid://3btklxef1sf4" path="res://art/TempPlayerSprite/BeekGuyFrontLeft2.png" id="10_gfu2f"]
+[ext_resource type="Texture2D" uid="uid://dk3njbpjw15fh" path="res://art/TempPlayerSprite/BeekGuyFrontRight1.png" id="11_eh0b3"]
+[ext_resource type="Texture2D" uid="uid://cd8j7w48ibu5p" path="res://art/TempPlayerSprite/BeekGuyFrontRight2.png" id="12_07xaf"]
+[ext_resource type="Texture2D" uid="uid://ddhwfqk7fy2lo" path="res://art/TempPlayerSprite/BeekGuyLeft1.png" id="13_pe8f0"]
+[ext_resource type="Texture2D" uid="uid://c6cmurthhvd8b" path="res://art/TempPlayerSprite/BeekGuyLeft2.png" id="14_8u1d4"]
+[ext_resource type="Texture2D" uid="uid://bgthonguf48rm" path="res://art/TempPlayerSprite/BeekGuyRight1.png" id="15_f8fg3"]
+[ext_resource type="Texture2D" uid="uid://4551vfm73m30" path="res://art/TempPlayerSprite/BeekGuyRight2.png" id="16_yadwy"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jfnjv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_p8ui7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_rbwh8")
+}],
+"loop": true,
+"name": &"Back",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_vi0pr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_gn2eb")
+}],
+"loop": true,
+"name": &"BackLeft",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_1u76s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_78cwo")
+}],
+"loop": true,
+"name": &"BackRight",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_2305v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_bli75")
+}],
+"loop": true,
+"name": &"Front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_ecx2b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_gfu2f")
+}],
+"loop": true,
+"name": &"FrontLeft",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_eh0b3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_07xaf")
+}],
+"loop": true,
+"name": &"FrontRight",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_pe8f0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_8u1d4")
+}],
+"loop": true,
+"name": &"Left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_f8fg3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_yadwy")
+}],
+"loop": true,
+"name": &"Right",
+"speed": 5.0
+}]
+
+[node name="BeekGuySprite" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_jfnjv")
+animation = &"Right"
+frame = 1
+frame_progress = 0.915744

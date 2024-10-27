@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://cn8nvf71ychui"]
+
+[node name="BeekGuy" type="CharacterBody2D"]
