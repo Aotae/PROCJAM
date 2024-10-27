@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=3 uid="uid://c8ytonen5a5kc"]
 
-[ext_resource type="Script" path="res://Player.cs" id="1_qujsq"]
+[ext_resource type="Script" path="res://scripts/Player.cs" id="1_qujsq"]
 [ext_resource type="Texture2D" uid="uid://yn5ebtoi5qcw" path="res://art/BeekGuy/BeekGuyFrontLeft1.png" id="2_xxmgd"]
 [ext_resource type="Texture2D" uid="uid://ca1p3jxkm0gid" path="res://art/BeekGuy/BeekGuyFrontLeft2.png" id="3_2q3lr"]
 [ext_resource type="Texture2D" uid="uid://dtr6ja205sjl8" path="res://art/BeekGuy/BeekGuyFrontRight1.png" id="4_y55lg"]
