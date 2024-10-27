@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dl07pvp65nb3q"
-path="res://.godot/imported/BeekGuyBackLeft2.png-35a49ba3e806dad8b52482201f55f51d.ctex"
+uid="uid://dmq4gmb3gd556"
+path="res://.godot/imported/BeekGuyLeft2(lowered).png-3115b36a34f87338676c86faf28003f8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/TempPlayerSprite/BeekGuyBackLeft2.png"
-dest_files=["res://.godot/imported/BeekGuyBackLeft2.png-35a49ba3e806dad8b52482201f55f51d.ctex"]
+source_file="res://art/TempPlayerSprite/BeekGuyLeft2(lowered).png"
+dest_files=["res://.godot/imported/BeekGuyLeft2(lowered).png-3115b36a34f87338676c86faf28003f8.ctex"]
 
 [params]
 

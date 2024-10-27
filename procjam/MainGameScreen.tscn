@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cm3k7rnoltgf4"]
+
+[ext_resource type="Texture2D" uid="uid://do6hdgpcfon6" path="res://art/ExampleBG.png" id="1_rb48a"]
+[ext_resource type="PackedScene" uid="uid://cn8nvf71ychui" path="res://BeekGuy.tscn" id="2_imgcv"]
+
+[node name="MainGameScreen" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_rb48a")
+
+[node name="BeekGuy" parent="." instance=ExtResource("2_imgcv")]
+scale = Vector2(0.2, 0.2)
+script = null
