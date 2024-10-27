@@ -1,13 +1,58 @@
-[gd_scene load_steps=3 format=3 uid="uid://cm3k7rnoltgf4"]
+[gd_scene load_steps=4 format=3 uid="uid://cm3k7rnoltgf4"]
 
 [ext_resource type="Texture2D" uid="uid://do6hdgpcfon6" path="res://art/ExampleBG.png" id="1_rb48a"]
 [ext_resource type="PackedScene" uid="uid://cn8nvf71ychui" path="res://BeekGuy.tscn" id="2_imgcv"]
 
+[sub_resource type="CanvasTexture" id="CanvasTexture_bgh15"]
+
 [node name="MainGameScreen" type="Node2D"]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="OffScreenSprite" type="Sprite2D" parent="."]
+scale = Vector2(13000, 8000)
+texture = SubResource("CanvasTexture_bgh15")
+
+[node name="BGSprite" type="Sprite2D" parent="."]
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_rb48a")
+
+[node name="BGSprite2" type="Sprite2D" parent="."]
+position = Vector2(1920, 0)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_rb48a")
+
+[node name="BGSprite3" type="Sprite2D" parent="."]
+position = Vector2(-1920, 0)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_rb48a")
+
+[node name="BGSprite4" type="Sprite2D" parent="."]
+position = Vector2(0, -1080)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_rb48a")
+
+[node name="BGSprite5" type="Sprite2D" parent="."]
+position = Vector2(1920, -1080)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_rb48a")
+
+[node name="BGSprite6" type="Sprite2D" parent="."]
+position = Vector2(-1920, -1080)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_rb48a")
+
+[node name="BGSprite7" type="Sprite2D" parent="."]
+position = Vector2(0, 1080)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_rb48a")
+
+[node name="BGSprite8" type="Sprite2D" parent="."]
+position = Vector2(1920, 1080)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_rb48a")
+
+[node name="BGSprite9" type="Sprite2D" parent="."]
+position = Vector2(-1920, 1080)
+scale = Vector2(1.5, 1.5)
 texture = ExtResource("1_rb48a")
 
 [node name="BeekGuy" parent="." instance=ExtResource("2_imgcv")]
-scale = Vector2(0.2, 0.2)
-script = null

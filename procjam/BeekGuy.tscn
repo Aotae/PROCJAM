@@ -1,13 +1,14 @@
 [gd_scene load_steps=4 format=3 uid="uid://cn8nvf71ychui"]
 
-[ext_resource type="Script" path="res://scripts/Player.cs" id="1_g4vbh"]
+[ext_resource type="Script" path="res://scripts/BeekGuy.cs" id="1_mrayr"]
 [ext_resource type="PackedScene" uid="uid://b0wcwam5iqybd" path="res://BeekGuy_sprite.tscn" id="1_yjt8y"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_reqel"]
 radius = 136.033
 
 [node name="BeekGuy" type="CharacterBody2D"]
-script = ExtResource("1_g4vbh")
+scale = Vector2(0.2, 0.2)
+script = ExtResource("1_mrayr")
 
 [node name="BeekGuySprite" parent="." instance=ExtResource("1_yjt8y")]
 frame_progress = 0.308523
