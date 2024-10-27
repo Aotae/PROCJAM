@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8ytonen5a5kc"]
+[gd_scene load_steps=5 format=3 uid="uid://c8ytonen5a5kc"]
 
 [ext_resource type="Texture2D" uid="uid://oj7sjlxlv5xk" path="res://art/TestSquare.png" id="1_hjpec"]
+[ext_resource type="Script" path="res://Player.cs" id="1_qujsq"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qh0qv"]
 animations = [{
@@ -14,12 +15,15 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qgy4c"]
-size = Vector2(210, 230)
+size = Vector2(210, 229)
 
-[node name="Area2D" type="Area2D"]
+[node name="Player" type="Area2D"]
+script = ExtResource("1_qujsq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_qh0qv")
+frame_progress = 0.0863879
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_qgy4c")
