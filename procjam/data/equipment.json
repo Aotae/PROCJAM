@@ -1,0 +1,28 @@
+{
+	"Equipment": {
+		"Melee": [
+			{"Name": "Rapier", "Damage": 10, "Range": 3, "AttackSpeed": 5},
+			{"Name": "reipaR", "Damage": 10, "Range": -3, "AttackSpeed": 5},
+			{"Name": "CombatKnife", "Damage": 10, "Range": 3, "AttackSpeed": 5},
+			{"Name": "LazerSword", "Damage": 10, "Range": 3, "AttackSpeed": 5},
+			{"Name": "Glaive", "Damage": 10, "Range": 3, "AttackSpeed": 5},
+			{"Name": "Saber", "Damage": 10, "Range": 3, "AttackSpeed": 5},
+			{"Name": "VikingSword", "Damage": 10, "Range": 3, "AttackSpeed": 5},
+			{"Name": "ShockSpear", "Damage": 10, "Range": 7, "AttackSpeed": 5}
+		],
+		"Ranged": [
+			{"Name": "Gun", "Damage": 10, "Range": 3, "AttackSpeed": 5},
+			{"Name": "RockGun", "Damage": 10, "Range": 3, "AttackSpeed": 5},
+			{"Name": "RayGun", "Damage": 10, "Range": 3, "AttackSpeed": 5},
+			{"Name": "Revolver", "Damage": 10, "Range": 7, "AttackSpeed": 5},
+			{"Name": "StickGun", "Damage": 10, "Range": 7, "AttackSpeed": 5}
+		],
+		"Armor": [
+			{"Name": "Plate Mail", "Defense": 10, "SpeedModifier": 0.5}
+		],
+		"Accessories": [
+			{"Name": "Fuckass Hat", "DamageModifier": 10, "DefenseModifier": 10, "SpeedModifier": 10}
+		]
+	}
+}
+  

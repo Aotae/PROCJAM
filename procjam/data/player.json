@@ -1,0 +1,9 @@
+{
+	"Characters": {
+		"Player": {
+			"Health": 50,
+			"Defense": 15,
+			"Speed": 1
+		}
+	}
+}
