@@ -1,11 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://cm3k7rnoltgf4"]
+[gd_scene load_steps=7 format=3 uid="uid://cm3k7rnoltgf4"]
 
+[ext_resource type="Script" path="res://scripts/MainGameScreen.cs" id="1_n03hy"]
 [ext_resource type="Texture2D" uid="uid://do6hdgpcfon6" path="res://art/ExampleBG.png" id="1_rb48a"]
 [ext_resource type="PackedScene" uid="uid://cn8nvf71ychui" path="res://scenes/BeekGuy.tscn" id="2_imgcv"]
+[ext_resource type="PackedScene" uid="uid://ougfi6qdo4tg" path="res://scenes/RedBlob.tscn" id="2_r7tq1"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_bgh15"]
 
+[sub_resource type="Curve2D" id="Curve2D_abka4"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 162, -19, 0, 0, 0, 0, 177, 264, 0, 0, 0, 0, -162, 257, 0, 0, 0, 0, -160, -15)
+}
+point_count = 4
+
 [node name="MainGameScreen" type="Node2D"]
+script = ExtResource("1_n03hy")
+RedBlobScene = ExtResource("2_r7tq1")
 
 [node name="OffScreenSprite" type="Sprite2D" parent="."]
 scale = Vector2(13000, 8000)
@@ -56,3 +66,18 @@ scale = Vector2(1.5, 1.5)
 texture = ExtResource("1_rb48a")
 
 [node name="BeekGuy" parent="." instance=ExtResource("2_imgcv")]
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="MobPath" type="Path2D" parent="."]
+position = Vector2(35, -121)
+curve = SubResource("Curve2D_abka4")
+
+[node name="MobSpawn" type="PathFollow2D" parent="MobPath"]
+position = Vector2(162, -19)
+rotation = 1.51784
+
+[node name="RedBlob" parent="." instance=ExtResource("2_r7tq1")]
+visible = false

@@ -1,5 +1,5 @@
 # PROCJAM
-## By Lailah Gonzalez, Elliot Mcgonigal, Kieran Dela Cruz, Nathan Pang, Matthew Roe, Jake Makuch, Cheddar 
+## By Lailah Gonzalez, Elliot Mcgonigal, Kieran Dela Cruz, Nathan Pang, Matthew Roe, Jake Makuch, Cheddar, Karter Zwetschke
 Repo for the PROCJAM Game Jam 10/26/24
 
 # Possible Ideas

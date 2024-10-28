@@ -4,9 +4,10 @@ using System;
 public partial class DungeonGen : Node
 {
 	[Export]
-	public int Room_X{get;set;} = 100;
+	public int Room_X {get; set;} = 100;
 	[Export]
-	public int Room_Y {get;set;} = 100;
+	public int Room_Y {get; set;} = 100;
+	
 	public override void _Ready()
 	{
 		var player = GD.Load<PackedScene>("res://Player.tscn");
@@ -15,6 +16,7 @@ public partial class DungeonGen : Node
 		var room = scene.Instantiate();
 		AddChild(room);
 		AddChild(playerinstance);
-		
 	}
+	
+	
 }
