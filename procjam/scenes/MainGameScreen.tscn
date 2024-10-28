@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cm3k7rnoltgf4"]
 
 [ext_resource type="Texture2D" uid="uid://do6hdgpcfon6" path="res://art/ExampleBG.png" id="1_rb48a"]
-[ext_resource type="PackedScene" uid="uid://cn8nvf71ychui" path="res://BeekGuy.tscn" id="2_imgcv"]
+[ext_resource type="PackedScene" uid="uid://cn8nvf71ychui" path="res://scenes/BeekGuy.tscn" id="2_imgcv"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_bgh15"]
 
