@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ipcwqmd27obr"
-path="res://.godot/imported/Grass1.png-ecb43184f0cb61e65cb4ab7a7e2a34bc.ctex"
+uid="uid://cpoh05ctndfdl"
+path="res://.godot/imported/Deadguy rocks.png-8b34eebb235d3f14d26cf2d8fa1e4b35.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/Grass1.png"
-dest_files=["res://.godot/imported/Grass1.png-ecb43184f0cb61e65cb4ab7a7e2a34bc.ctex"]
+source_file="res://art/tiles/Deadguy rocks.png"
+dest_files=["res://.godot/imported/Deadguy rocks.png-8b34eebb235d3f14d26cf2d8fa1e4b35.ctex"]
 
 [params]
 
