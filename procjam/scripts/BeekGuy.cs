@@ -54,7 +54,7 @@ public partial class BeekGuy : CharacterBody2D
 		
 		var animatedSprite2D = GetNode<AnimatedSprite2D>("BeekGuySprite");
 
-		if (velocity.Length() > 0)
+		if (Velocity.Length() > 0)
 		{
 			velocity = velocity.Normalized() * MoveSpeed;
 			animatedSprite2D.Play();
@@ -64,35 +64,35 @@ public partial class BeekGuy : CharacterBody2D
 			animatedSprite2D.Stop();
 		}
 		// sprite selection
-		if (velocity.X > 0 && velocity.Y > 0)
+		if (Velocity.X > 0 && Velocity.Y > 0)
 		{
 			animatedSprite2D.Animation = "FrontRight";
 		}
-		else if (velocity.X > 0 && velocity.Y < 0)
+		else if (Velocity.X > 0 && Velocity.Y < 0)
 		{
 			animatedSprite2D.Animation = "BackRight";
 		}
-		else if (velocity.X < 0 && velocity.Y > 0)
+		else if (Velocity.X < 0 && Velocity.Y > 0)
 		{
 			animatedSprite2D.Animation = "FrontLeft";
 		}
-		else if (velocity.X < 0 && velocity.Y < 0)
+		else if (Velocity.X < 0 && Velocity.Y < 0)
 		{
 			animatedSprite2D.Animation = "BackLeft";
 		}
-		else if (velocity.X > 0)
+		else if (Velocity.X > 0)
 		{
 			animatedSprite2D.Animation = "Right";
 		}
-		else if (velocity.X < 0)
+		else if (Velocity.X < 0)
 		{
 			animatedSprite2D.Animation = "Left";
 		}
-		else if (velocity.Y > 0)
+		else if (Velocity.Y > 0)
 		{
 			animatedSprite2D.Animation = "Front";
 		}
-		else if (velocity.Y < 0)
+		else if (Velocity.Y < 0)
 		{
 			animatedSprite2D.Animation = "Back";
 		}

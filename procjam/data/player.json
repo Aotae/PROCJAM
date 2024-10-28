@@ -1,0 +1,16 @@
+{
+	"Player": {
+		"Health": 50,
+		"Defense": 15,
+		"Speed": 1,
+		"Score": 0
+	},
+	"Equipped": {
+		"Weapon": "",
+		"Armor": "",
+		"Accesssory1": "",
+		"Accesssory2": "",
+		"Accesssory3": "",
+		"Accesssory4": "",
+	}
+}

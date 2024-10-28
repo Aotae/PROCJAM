@@ -1,0 +1,27 @@
+{
+	"Equipment": {
+		"Melee": [
+			{"id": 101, "Name": "Rapier", "Damage": 10, "Range": 3, "AttackSpeed": 5},
+			{"id": 102, "Name": "reipaR", "Damage": 10, "Range": -3, "AttackSpeed": 5},
+			{"id": 103, "Name": "CombatKnife", "Damage": 10, "Range": 3, "AttackSpeed": 5},
+			{"id": 104, "Name": "LazerSword", "Damage": 10, "Range": 3, "AttackSpeed": 5},
+			{"id": 105, "Name": "Glaive", "Damage": 10, "Range": 3, "AttackSpeed": 5},
+			{"id": 106, "Name": "Saber", "Damage": 10, "Range": 3, "AttackSpeed": 5},
+			{"id": 107, "Name": "VikingSword", "Damage": 10, "Range": 3, "AttackSpeed": 5},
+			{"id": 108, "Name": "ShockSpear", "Damage": 10, "Range": 7, "AttackSpeed": 5}
+		],
+		"Ranged": [
+			{"id": 201, "Name": "Gun", "Damage": 10, "Range": 3, "AttackSpeed": 5},
+			{"id": 202, "Name": "RockGun", "Damage": 10, "Range": 3, "AttackSpeed": 5},
+			{"id": 203, "Name": "RayGun", "Damage": 10, "Range": 3, "AttackSpeed": 5},
+			{"id": 204, "Name": "Revolver", "Damage": 10, "Range": 7, "AttackSpeed": 5},
+			{"id": 205, "Name": "StickGun", "Damage": 10, "Range": 7, "AttackSpeed": 5}
+		],
+		"Armor": [
+			{"id": 301, "Name": "Plate Mail", "Defense": 10, "SpeedModifier": 0.5}
+		],
+		"Accessories": [
+			{"id": 401, "Name": "Fuckass Hat", "DamageModifier": 10, "DefenseModifier": 10, "SpeedModifier": 10}
+		]
+	}
+}

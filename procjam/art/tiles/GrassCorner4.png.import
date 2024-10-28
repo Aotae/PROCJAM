@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ckg43r5etcchn"
-path="res://.godot/imported/Wall.png-f07daf38ea6c0cb49d9e4aef6a52f1f3.ctex"
+uid="uid://blkys2kr1u3h4"
+path="res://.godot/imported/GrassCorner4.png-d09c6f07d77f8c355afe302f79a82232.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/Wall.png"
-dest_files=["res://.godot/imported/Wall.png-f07daf38ea6c0cb49d9e4aef6a52f1f3.ctex"]
+source_file="res://art/tiles/GrassCorner4.png"
+dest_files=["res://.godot/imported/GrassCorner4.png-d09c6f07d77f8c355afe302f79a82232.ctex"]
 
 [params]
 

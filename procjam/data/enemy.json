@@ -1,0 +1,33 @@
+{
+	"Enemies": {
+		"Enemy1": {
+			"Health": 10,
+			"Defense": 15,
+			"Speed": 1,
+			"Modifier1": "",
+			"Modifier2": ""
+		},
+		"Enemy2": {
+			"Health": 10,
+			"Defense": 15,
+			"Speed": 1,
+			"Modifier1": "",
+			"Modifier2": ""
+		},
+		"Enemy3": {
+			"Health": 10,
+			"Defense": 15,
+			"Speed": 1,
+			"Modifier1": "",
+			"Modifier2": ""
+		},
+		"Enemy4": {
+			"Health": 10,
+			"Defense": 15,
+			"Speed": 1,
+			"Modifier1": "",
+			"Modifier2": ""
+		}
+	}
+}
+  
