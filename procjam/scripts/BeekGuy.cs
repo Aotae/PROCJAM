@@ -1,21 +1,33 @@
 using Godot;
 using System;
+using System.Text.Json;
 
 public partial class BeekGuy : CharacterBody2D
 {
 	[Export]
-	public int Speed {get; set;} = 100;
-	public Vector2 ScreenSize;
+	// health, moveSpeed, attackSpeed, defense, attack
+	public int Health {get; set;} = 100;
+	public int MoveSpeed {get; set;} = 100;
+	public int AttackSpeed {get; set;} = 100;
+	public int Attack {get; set;} = 100;
+	public int Defense {get; set;} = 100;
+	public Vector2 ScreenSize = new Vector2(2880,1620);
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		ScreenSize = GetViewportRect().Size;
+		//open Json and get data
+		using var file = FileAccess.Open("res://stats.json", FileAccess.ModeFlags.Read);
+		string jsonString = file.GetAsText();
+		var details = Json.ParseString(jsonString);
+		var data = Json.ParseString(jsonString);
+		//allocate data to local variables
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		var velocity = Vector2.Zero; // The player's movement vector.
+		Vector2 velocity = Vector2.Zero; // The player's movement vector.
 
 		if (Input.IsActionPressed("move_right"))
 		{
@@ -37,14 +49,14 @@ public partial class BeekGuy : CharacterBody2D
 			velocity.Y -= 1;
 		}
 		
-		Position += velocity * Speed * (float)delta;
-		Position = new Vector2(x: Mathf.Clamp(Position.X, -2880, 2880),y: Mathf.Clamp(Position.Y, -1620, 1620));
+		Position += velocity * MoveSpeed * (float)delta;
+		Position = new Vector2(x: Mathf.Clamp(Position.X, -ScreenSize.X, ScreenSize.X),y: Mathf.Clamp(Position.Y, -ScreenSize.Y, ScreenSize.Y));
 		
 		var animatedSprite2D = GetNode<AnimatedSprite2D>("BeekGuySprite");
 
 		if (velocity.Length() > 0)
 		{
-			velocity = velocity.Normalized() * Speed;
+			velocity = velocity.Normalized() * MoveSpeed;
 			animatedSprite2D.Play();
 		}
 		else
