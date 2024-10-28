@@ -20,7 +20,7 @@ public partial class BeekGuy : CharacterBody2D
 	public override void _Ready()
 	{
 		//open Json and get data
-		using var file = FileAccess.Open("res://stats.json", FileAccess.ModeFlags.Read);
+		using var file = FileAccess.Open("res://player.json", FileAccess.ModeFlags.Read);
 		string jsonString = file.GetAsText();
 		var details = Json.ParseString(jsonString);
 		var data = Json.ParseString(jsonString);
