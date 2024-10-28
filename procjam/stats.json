@@ -1,0 +1,53 @@
+{
+	"Characters": {
+		"Player": {
+			"Health": 50,
+			"Defense": 15,
+			"Speed": 1
+		},
+		"Enemy1": {
+			"Health": 10,
+			"Defense": 15,
+			"Speed": 1
+		},
+		"Enemy2": {
+			"Health": 10,
+			"Defense": 15,
+			"Speed": 1
+		},
+		"Enemy3": {
+			"Health": 10,
+			"Defense": 15,
+			"Speed": 1
+		},
+		"Enemy4": {
+			"Health": 10,
+			"Defense": 15,
+			"Speed": 1
+		}
+	},
+	"Weapons": {
+		"Melee": [
+			{"Name": "Rapier", "Damage": 10, "Range": 3, "AttackSpeed": 5},
+			{"Name": "reipaR", "Damage": 10, "Range": -3, "AttackSpeed": 5},
+			{"Name": "BeamSword", "Damage": 10, "Range": 3, "AttackSpeed": 5},
+			{"Name": "ShockStick", "Damage": 10, "Range": 7, "AttackSpeed": 5}
+		],
+		"Ranged": [
+			{"Name": "Gun", "Damage": 10, "Range": 3, "AttackSpeed": 5},
+			{"Name": "InvisibleGun", "Damage": 10, "Range": -3, "AttackSpeed": 5},
+			{"Name": "LaserGun", "Damage": 10, "Range": 3, "AttackSpeed": 5},
+			{"Name": "Revolver", "Damage": 10, "Range": 7, "AttackSpeed": 5},
+			{"Name": "Stick", "Damage": 10, "Range": 7, "AttackSpeed": 5}
+		]
+	},
+	"Equipment": {
+		"Armor": [
+			{"Name": "Plate Mail", "Defense": 10, "SpeedModifier": 0.5}
+		],
+		"Accessories": [
+			{"Name": "Fuckass Hat", "DamageModifier": 10, "DefenseModifier": 10, "SpeedModifier": 10}
+		]
+	}
+}
+  
