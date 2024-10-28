@@ -7,7 +7,7 @@ public partial class BeekGuy : CharacterBody2D
 	[Export]
 	// health, moveSpeed, attackSpeed, defense, attack
 	public int Health {get; set;} = 100;
-	public int MoveSpeed {get; set;} = 100;
+	public int MoveSpeed {get; set;} = 400;
 	public int AttackSpeed {get; set;} = 100;
 	public int Attack {get; set;} = 100;
 	public int Defense {get; set;} = 100;
@@ -21,42 +21,41 @@ public partial class BeekGuy : CharacterBody2D
 		var details = Json.ParseString(jsonString);
 		var data = Json.ParseString(jsonString);
 		//allocate data to local variables
-		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		Vector2 velocity = Vector2.Zero; // The player's movement vector.
+		Vector2 Velocity = Vector2.Zero; // The player's movement vector.
 
 		if (Input.IsActionPressed("move_right"))
 		{
-			velocity.X += 1;
+			Velocity.X += 1;
 		}
 
 		if (Input.IsActionPressed("move_left"))
 		{
-			velocity.X -= 1;
+			Velocity.X -= 1;
 		}
 
 		if (Input.IsActionPressed("move_down"))
 		{
-			velocity.Y += 1;
+			Velocity.Y += 1;
 		}
 
 		if (Input.IsActionPressed("move_up"))
 		{
-			velocity.Y -= 1;
+			Velocity.Y -= 1;
 		}
 		
-		Position += velocity * MoveSpeed * (float)delta;
+		Position += Velocity * MoveSpeed * (float)delta;
 		Position = new Vector2(x: Mathf.Clamp(Position.X, -ScreenSize.X, ScreenSize.X),y: Mathf.Clamp(Position.Y, -ScreenSize.Y, ScreenSize.Y));
 		
 		var animatedSprite2D = GetNode<AnimatedSprite2D>("BeekGuySprite");
 
 		if (Velocity.Length() > 0)
 		{
-			velocity = velocity.Normalized() * MoveSpeed;
+			Velocity = Velocity.Normalized() * MoveSpeed;
 			animatedSprite2D.Play();
 		}
 		else
