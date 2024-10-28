@@ -5,12 +5,16 @@ using System.Text.Json;
 public partial class BeekGuy : CharacterBody2D
 {
 	[Export]
-	// health, moveSpeed, attackSpeed, defense, attack
 	public int Health {get; set;} = 100;
+	[Export]
 	public int MoveSpeed {get; set;} = 400;
+	[Export]
 	public int AttackSpeed {get; set;} = 100;
+	[Export]
 	public int Attack {get; set;} = 100;
+	[Export]
 	public int Defense {get; set;} = 100;
+	[Export]
 	public Vector2 ScreenSize = new Vector2(2880,1620);
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
