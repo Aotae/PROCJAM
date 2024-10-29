@@ -21,7 +21,7 @@ public partial class BigRoom : Node2D
 	TileMapLayer walls{get; set;}
 	[Export]
 	public FastNoiseLite MapNoise = new FastNoiseLite();
-	
+
 	void GenerateMap(float[,] noise)
 	{
 		for (int i = 0; i < MapSizeX;i++){
