@@ -4,6 +4,12 @@ using System.Text.Json;
 
 public partial class BeekGuy : CharacterBody2D
 {
+	// Apparently garbage issues occur if not using static vars for IsActionPressed
+	public static StringName MoveRight = new StringName("move_right");
+	public static StringName MoveLeft = new StringName("move_left");
+	public static StringName MoveDown = new StringName("move_down");
+	public static StringName MoveUp = new StringName("move_up");
+	
 	[Export]
 	public int Health {get; set;} = 100;
 	[Export]
@@ -31,23 +37,20 @@ public partial class BeekGuy : CharacterBody2D
 	public override void _Process(double delta)
 	{
 		Vector2 Velocity = Vector2.Zero; // The player's movement vector.
-
-		if (Input.IsActionPressed("move_right"))
+		
+		if (Input.IsActionPressed(MoveRight))
 		{
 			Velocity.X += 1;
 		}
-
-		if (Input.IsActionPressed("move_left"))
+		if (Input.IsActionPressed(MoveLeft))
 		{
 			Velocity.X -= 1;
 		}
-
-		if (Input.IsActionPressed("move_down"))
+		if (Input.IsActionPressed(MoveDown))
 		{
 			Velocity.Y += 1;
 		}
-
-		if (Input.IsActionPressed("move_up"))
+		if (Input.IsActionPressed(MoveUp))
 		{
 			Velocity.Y -= 1;
 		}
