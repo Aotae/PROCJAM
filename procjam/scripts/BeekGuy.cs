@@ -6,13 +6,9 @@ public partial class BeekGuy : CharacterBody2D
 {
 	[Export]
 	public int Health {get; set;} = 100;
-<<<<<<< Updated upstream
 	[Export]
 	public int MoveSpeed {get; set;} = 400;
 	[Export]
-=======
-	public int MoveSpeed {get; set;} = 1000;
->>>>>>> Stashed changes
 	public int AttackSpeed {get; set;} = 100;
 	[Export]
 	public int Attack {get; set;} = 100;
@@ -24,17 +20,10 @@ public partial class BeekGuy : CharacterBody2D
 	public override void _Ready()
 	{
 		//open Json and get data
-<<<<<<< Updated upstream
 		using var file = FileAccess.Open("res://player.json", FileAccess.ModeFlags.Read);
 		string jsonString = file.GetAsText();
 		var details = Json.ParseString(jsonString);
 		var data = Json.ParseString(jsonString);
-=======
-		// using var file = FileAccess.Open("res://stats.json", FileAccess.ModeFlags.Read);
-		// string jsonString = file.GetAsText();
-		// var details = Json.ParseString(jsonString);
-		// var data = Json.ParseString(jsonString);
->>>>>>> Stashed changes
 		//allocate data to local variables
 	}
 
@@ -64,7 +53,6 @@ public partial class BeekGuy : CharacterBody2D
 		}
 		
 		Position += Velocity * MoveSpeed * (float)delta;
-		Position = new Vector2(x: Mathf.Clamp(Position.X, -ScreenSize.X, ScreenSize.X),y: Mathf.Clamp(Position.Y, -ScreenSize.Y, ScreenSize.Y));
 		// Position = new Vector2(x: Mathf.Clamp(Position.X, -ScreenSize.X, ScreenSize.X),y: Mathf.Clamp(Position.Y, -ScreenSize.Y, ScreenSize.Y));
 		
 		var animatedSprite2D = GetNode<AnimatedSprite2D>("BeekGuySprite");
