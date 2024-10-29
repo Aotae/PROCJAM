@@ -13,7 +13,7 @@ public partial class BeekGuy : CharacterBody2D
 	[Export]
 	public int Health {get; set;} = 100;
 	[Export]
-	public int MoveSpeed {get; set;} = 400;
+	public int MoveSpeed {get; set;} = 1000;
 	[Export]
 	public int AttackSpeed {get; set;} = 100;
 	[Export]
@@ -26,11 +26,11 @@ public partial class BeekGuy : CharacterBody2D
 	public override void _Ready()
 	{
 		//open Json and get data
-		using var file = FileAccess.Open("res://player.json", FileAccess.ModeFlags.Read);
-		string jsonString = file.GetAsText();
-		var details = Json.ParseString(jsonString);
-		var data = Json.ParseString(jsonString);
-		//allocate data to local variables
+		// using var file = FileAccess.Open("res://player.json", FileAccess.ModeFlags.Read);
+		// string jsonString = file.GetAsText();
+		// var details = Json.ParseString(jsonString);
+		// var data = Json.ParseString(jsonString);
+		// //allocate data to local variables
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
