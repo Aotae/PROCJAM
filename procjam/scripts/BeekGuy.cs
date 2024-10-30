@@ -17,7 +17,7 @@ public partial class BeekGuy : CharacterBody2D
 	[Export]
 	public int Health {get; set;} = 100;
 	[Export]
-	public int MoveSpeed {get; set;} = 400;
+	public int MoveSpeed {get; set;} = 1000;
 	[Export]
 	public int AttackSpeed {get; set;} = 100;
 	[Export]
