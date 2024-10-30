@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class RedBlob : Node2D
+public partial class Queen : Node2D
 {
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -13,6 +13,7 @@ public partial class RedBlob : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		// moves quickly after player
 		BeekGuy player = GetNode<BeekGuy>("../BeekGuy");
 		float speed = 80;
 		float moveAmount = speed * (float)delta;

@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dq1qo45rj1430" path="res://art/RedBlob/redBlob1.png" id="1_a4x4g"]
 [ext_resource type="Texture2D" uid="uid://bbfdll3efwlsh" path="res://art/RedBlob/redBlob2.png" id="2_co4k5"]
 [ext_resource type="Texture2D" uid="uid://cb3p51ked7h2s" path="res://art/RedBlob/redBlob3.png" id="3_ec1vo"]
-[ext_resource type="Script" path="res://scripts/RedBlob.cs" id="4_sugj3"]
+[ext_resource type="Script" path="res://scripts/Enemies/RedBlob.cs" id="4_sugj3"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_16fsu"]
 animations = [{
