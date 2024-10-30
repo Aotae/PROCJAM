@@ -3,7 +3,7 @@
 		"Health": 50,
 		"Attack": 5,
 		"Defense": 15,
-		"Speed": 1000,
+		"Speed": 500,
 		"AttackSpeed": 1,
 		"Score": 0
 	},

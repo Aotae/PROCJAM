@@ -20,18 +20,10 @@ public partial class BigRoom : Node2D
     private float GetTileWeight(Vector2I atlasCoords)
     {
         // Convert atlas coordinates to a tile ID
-        int tileId = oneBit.GetCustomDataLayerByName("Weight");  // Get the tile ID for the atlas coordinates
-        
-        // if (tileId != -1)
-        // {
-        //     // Check if the tile has custom data and retrieve the weight
-        //     if (oneBit.TileGetCustomDataCount(tileId) > 0)
-        //     {
-        //         return (float)oneBit.TileGetCustomData(tileId, 0);  // Access the first custom data layer
-        //     }
-        // }
-
-        return 1.0f;  // Default weight if no custom data found
+		Atlas = (TileSetAtlasSource)oneBit.GetSource(0);
+		TileData data = Atlas.GetTileData(atlasCoords,0);
+		float weight = (float)data.GetCustomData("Weight");
+        return weight;  // Default weight if no custom data found
     }
     private void PrintJaggedArray(Array<Vector2I>[][] jaggedArray)
     {
@@ -154,21 +146,34 @@ public partial class BigRoom : Node2D
 	private void Collapse(Vector2I position, Array<Vector2I>[][] tiles)
 	{
 		var cellTiles = tiles[position.X][position.Y];
-		
 		if (cellTiles == null || cellTiles.Count == 0)
 		{
 			GD.PrintErr("Attempted to collapse an empty cell at ", position);
 			return;
 		}
 
-		int randomIndex = (int)(GD.Randi() % cellTiles.Count);
-		Vector2I chosen = cellTiles[randomIndex];
-		// GD.Print("Chosen tile at ", position, ": ", chosen);
+		// Calculate cumulative weight and choose based on weighted probability
+		float totalWeight = cellTiles.Sum(tile => GetTileWeight(tile));
+		float chosenWeight = (float)(GD.Randf() * totalWeight);
+		
+		Vector2I chosenTile = cellTiles[0];
+		foreach (var tile in cellTiles)
+		{
+			chosenWeight -= GetTileWeight(tile);
+			if (chosenWeight <= 0)
+			{
+				chosenTile = tile;
+				break;
+			}
+		}
 
-		// Set the cell to the chosen tile
-		tiles[position.X][position.Y] = new Array<Vector2I> { chosen };
-		ground.SetCell(position, 0, chosen);
+		// GD.Print("Chosen weighted tile at ", position, ": ", chosenTile);
+		tiles[position.X][position.Y] = new Array<Vector2I> { chosenTile };
+
+		// Place the chosen tile in the TileMapLayer
+		ground.SetCell(position, 0, chosenTile);
 	}
+
 
 	private void PropagateConstraints(Vector2I cellPos, Array<Vector2I>[][] tiles)
 	{
