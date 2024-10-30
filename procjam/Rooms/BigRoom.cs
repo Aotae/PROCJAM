@@ -1,164 +1,214 @@
 using Godot;
 using Godot.Collections;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 public partial class BigRoom : Node2D
 {
     private Vector2I[] neighbors = { Vector2I.Up, Vector2I.Down, Vector2I.Left, Vector2I.Right };
-	private Dictionary<Vector2I, Array<Vector2I>> Patterns = new Dictionary<Vector2I, Array<Vector2I>>();
-    Vector2I LandAtlas = new Vector2I(0, 0);
-    Vector2I WaterAtlas = new Vector2I(6, 0);
-
+    private Godot.Collections.Dictionary<Vector2I, Array<Vector2I>> Patterns = new Godot.Collections.Dictionary<Vector2I, Array<Vector2I>>();
+    private Vector2I LandAtlas = new Vector2I(0, 0);
+    private Vector2I WaterAtlas = new Vector2I(6, 0);
     [Export] private int PatternId { get; set; } = 0;
     [Export] public int MapSizeX { get; set; } = 10;
     [Export] public int MapSizeY { get; set; } = 10;
-    [Export] TileMapLayer ground { get; set; }
-    [Export] TileMapLayer walls { get; set; }
+    [Export] private TileMapLayer ground { get; set; }
+    [Export] private TileMapLayer walls { get; set; }
     [Export] public FastNoiseLite MapNoise = new FastNoiseLite();
-    [Export] TileSet oneBit { get; set; }
+    [Export] private TileSet oneBit { get; set; }
 
-    // Generate patterns and their neighbor constraints
-    void GeneratePatterns()
+    private void PrintJaggedArray(Array<Vector2I>[][] jaggedArray)
     {
-        TileMapPattern WFCSample = oneBit.GetPattern(PatternId);
-        Array<Vector2I> PatternCells = WFCSample.GetUsedCells();
-        
-
-        foreach (Vector2I cell in PatternCells)
+        for (int i = 0; i < jaggedArray.Length; i++)
         {
-            Vector2I current = WFCSample.GetCellAtlasCoords(cell);
-            Patterns[current] = new Array<Vector2I>();
-            foreach (Vector2I neighbour in neighbors)
+            string rowOutput = "";
+            for (int j = 0; j < jaggedArray[i].Length; j++)
             {
-                Vector2I currentNeighbor = cell + neighbour;
-                if (currentNeighbor.X >= 0 && currentNeighbor.Y >= 0 && WFCSample.HasCell(currentNeighbor))
+                var cellArray = jaggedArray[i][j];
+                rowOutput += "[";
+                for (int k = 0; k < cellArray.Count; k++)
                 {
-                    Patterns[current].Add(WFCSample.GetCellAtlasCoords(currentNeighbor));
+                    rowOutput += cellArray[k].ToString();
+                    if (k < cellArray.Count - 1) rowOutput += ", ";
                 }
+                rowOutput += "]";
+                if (j < jaggedArray[i].Length - 1) rowOutput += ", ";
             }
+            GD.Print("Row ", i, ": ", rowOutput);
         }
-        GD.Print(Patterns);
     }
+    
+    // Generate patterns and their neighbor constraints
+	private void GeneratePatterns()
+	{
+		var WFCSample = oneBit.GetPattern(PatternId);
+		var PatternCells = WFCSample.GetUsedCells();
+
+		foreach (Vector2I cell in PatternCells)
+		{
+			Vector2I cellAtlasCoords = WFCSample.GetCellAtlasCoords(cell);
+
+			// Initialize the array if the key doesn't exist, otherwise append to the existing array
+			if (!Patterns.ContainsKey(cellAtlasCoords))
+			{
+				Patterns[cellAtlasCoords] = new Array<Vector2I>();
+			}
+
+			foreach (Vector2I neighborOffset in neighbors)
+			{
+				Vector2I neighborCell = cell + neighborOffset;
+				if (neighborCell.X >= 0 && neighborCell.Y >= 0 && WFCSample.HasCell(neighborCell))
+				{
+					Vector2I neighborCoords = WFCSample.GetCellAtlasCoords(neighborCell);
+					
+					// Add the neighbor coordinates only if they are not already present to avoid duplicates
+					if (!Patterns[cellAtlasCoords].Contains(neighborCoords))
+					{
+						Patterns[cellAtlasCoords].Add(neighborCoords);
+					}
+				}
+			}
+		}
+
+		foreach (KeyValuePair<Vector2I, Array<Vector2I>> kvp in Patterns)
+		{
+			GD.Print("Key: ", kvp.Key, " Value: ", kvp.Value);
+		}
+	}
 
     // Initialize the map and perform the Wave Function Collapse algorithm
-	void GenerateMap(float[,] noise)
-	{
+   private void GenerateMap(float[,] noise)
+   {
 		Vector2I[] patternKeys = Patterns.Keys.ToArray();
-		Vector2I[][][] sptiles = new Vector2I[MapSizeX][][];
+		Array<Vector2I>[][] sptiles = new Array<Vector2I>[MapSizeX][];
 
 		for (int i = 0; i < MapSizeX; i++)
 		{
-			sptiles[i] = new Vector2I[MapSizeY][];
+			sptiles[i] = new Array<Vector2I>[MapSizeY];
 			for (int j = 0; j < MapSizeY; j++)
 			{
-				sptiles[i][j] = patternKeys.Length > 0 ? patternKeys.ToArray() : new Vector2I[0]; // Initialize with pattern keys or empty
+				// Initialize each cell with a copy of all pattern options
+				sptiles[i][j] = new Array<Vector2I>(patternKeys);
 			}
 		}
 
 		while (true)
 		{
-			Vector2I? cell = GetLowestEntropy(sptiles);
-			if (cell == null) break; // All cells are collapsed
+			Vector2I cell = GetLowestEntropy(sptiles);
+			// GD.Print("Current cell to collapse: ", cell);
+			
+			if (cell == new Vector2I(-1, -1))
+			{
+				// All cells are collapsed
+				GD.Print("Map generation completed successfully.");
+				break;
+			}
 
-			Collapse(cell.Value, sptiles);
-			PropagateConstraints(cell.Value, sptiles);
+			Collapse(cell, sptiles);
+			// GD.Print("Cell collapsed at: ", cell);
+			PropagateConstraints(cell, sptiles);
 		}
 	}
 
-
-    // Propagate constraints to reduce possibilities for neighboring tiles
-    private void PropagateConstraints(Vector2I cellpos, Vector2I[][][] tiles)
+	private Vector2I GetLowestEntropy(Array<Vector2I>[][] tiles)
 	{
-		var ToVisit = new System.Collections.Generic.Queue<Vector2I>();
-		ToVisit.Enqueue(cellpos);
+		int minEntropy = int.MaxValue; // Reset minEntropy each time this method is called
+		Vector2I minCell = new Vector2I(-1, -1);
 
-		while (ToVisit.Count > 0)
+		for (int x = 0; x < MapSizeX; x++)
 		{
-			Vector2I pos = ToVisit.Dequeue();
-
-			// Ensure the current cell is already collapsed (has only one tile)
-			if (tiles[pos.X][pos.Y].Length != 1)
-				continue;
-
-			Vector2I collapsedTile = tiles[pos.X][pos.Y][0]; // Get the single tile ID for the collapsed cell
-
-			if (!Patterns.ContainsKey(collapsedTile))
+			for (int y = 0; y < MapSizeY; y++)
 			{
-				GD.PrintErr($"Tile {collapsedTile} at {pos} does not exist in Patterns.");
-				continue; // Skip if collapsedTile is invalid
+				if (tiles[x][y] == null || tiles[x][y].Count <= 1)
+					continue; // Skip already-collapsed or empty cells
+
+				int entropy = tiles[x][y].Count;
+				if (entropy < minEntropy)
+				{
+					minEntropy = entropy;
+					minCell = new Vector2I(x, y);
+				}
+			}
+		}
+
+		// GD.Print("Lowest entropy cell found: ", minCell, " with entropy ", minEntropy);
+		return minCell;
+	}
+
+	private void Collapse(Vector2I position, Array<Vector2I>[][] tiles)
+	{
+		var cellTiles = tiles[position.X][position.Y];
+		
+		if (cellTiles == null || cellTiles.Count == 0)
+		{
+			GD.PrintErr("Attempted to collapse an empty cell at ", position);
+			return;
+		}
+
+		int randomIndex = (int)(GD.Randi() % cellTiles.Count);
+		Vector2I chosen = cellTiles[randomIndex];
+		// GD.Print("Chosen tile at ", position, ": ", chosen);
+
+		// Set the cell to the chosen tile
+		tiles[position.X][position.Y] = new Array<Vector2I> { chosen };
+		ground.SetCell(position, 0, chosen);
+	}
+
+	private void PropagateConstraints(Vector2I cellPos, Array<Vector2I>[][] tiles)
+	{
+		var stack = new Stack<Vector2I>();
+		stack.Push(cellPos);
+
+		while (stack.Count > 0)
+		{
+			Vector2I current = stack.Pop();
+			Array<Vector2I> currentPossible = tiles[current.X][current.Y];
+			
+			if (currentPossible == null || currentPossible.Count == 0)
+			{
+				GD.PrintErr("No possible tiles to propagate at ", current);
+				continue;
 			}
 
-			Array<Vector2I> validNeighbors = Patterns[collapsedTile];
-			Vector2I[] directions = { Vector2I.Up, Vector2I.Down, Vector2I.Left, Vector2I.Right };
-
-			// Process each direction
-			for (int i = 0; i < directions.Length; i++)
+			foreach (Vector2I neighbor in neighbors)
 			{
-				Vector2I neighborPos = pos + directions[i];
+				Vector2I currentNeighbor = current + neighbor;
 
-				// Ensure neighbor position is within bounds
-				if (neighborPos.X < 0 || neighborPos.X >= MapSizeX || neighborPos.Y < 0 || neighborPos.Y >= MapSizeY)
-					continue;
-
-				// Ensure the neighbor cell exists and has options left
-				if (tiles[neighborPos.X][neighborPos.Y] == null)
+				if (currentNeighbor.X >= 0 && currentNeighbor.Y >= 0 &&
+					currentNeighbor.X < MapSizeX && currentNeighbor.Y < MapSizeY)
 				{
-					GD.PrintErr($"Neighbor cell {neighborPos} was unexpectedly null. Initializing to an empty array.");
-					tiles[neighborPos.X][neighborPos.Y] = new Vector2I[0]; // Initialize with an empty array to prevent further issues
-					continue;
-				}
+					Array<Vector2I> neighborTiles = tiles[currentNeighbor.X][currentNeighbor.Y];
 
-				System.Collections.Generic.List<Vector2I> neighborOptions = tiles[neighborPos.X][neighborPos.Y].ToList();
+					if (neighborTiles == null || neighborTiles.Count == 0)
+					{
+						GD.PrintErr("Neighbor at ", currentNeighbor, " has no possible tiles.");
+						continue;
+					}
 
-				// Remove any options from neighbor that aren't valid
-				int originalCount = neighborOptions.Count;
-				neighborOptions.RemoveAll(tile => !validNeighbors.Contains(tile));
+					bool changed = false;
 
-				// Only update and enqueue if we reduced the number of options
-				if (neighborOptions.Count < originalCount)
-				{
-					tiles[neighborPos.X][neighborPos.Y] = neighborOptions.ToArray();
-					ToVisit.Enqueue(neighborPos); // Propagate further if options were reduced
+					foreach (Vector2I tile in neighborTiles.ToList())
+					{
+						bool isCompatible = currentPossible.Any(possibleTile =>
+							Patterns.ContainsKey(possibleTile) && Patterns[possibleTile].Contains(tile));
+
+						if (!isCompatible)
+						{
+							neighborTiles.Remove(tile);
+							changed = true;
+						}
+					}
+
+					if (changed)
+					{
+						stack.Push(currentNeighbor);
+					}
 				}
 			}
 		}
 	}
 
-
-    // Collapse a cell to a single tile choice and update the TileMap
-    private void Collapse(Vector2I position, Vector2I[][][] tiles)
-    {
-        if (tiles[position.X][position.Y].Length <= 1) return; // Already collapsed
-
-        // Choose a random tile from possible options
-        Vector2I chosen = tiles[position.X][position.Y][GD.Randi() % tiles[position.X][position.Y].Length];
-        Vector2I[] visited = { chosen };
-        ground.SetCell(position, 0, chosen, 0); // Set the tile in the TileMap
-        tiles[position.X][position.Y] = visited; // Collapse to this tile
-    }
-
-    // Find the cell with the lowest entropy (fewest remaining possibilities)
-    private Vector2I? GetLowestEntropy(Vector2I[][][] tiles)
-    {
-        int minEntropy = int.MaxValue;
-        Vector2I? selectedCell = null;
-
-        for (int x = 0; x < MapSizeX; x++)
-        {
-            for (int y = 0; y < MapSizeY; y++)
-            {
-                int entropy = tiles[x][y].Length;
-                if (entropy > 1 && entropy < minEntropy)
-                {
-                    minEntropy = entropy;
-                    selectedCell = new Vector2I(x, y);
-                }
-            }
-        }
-
-        return selectedCell;
-    }
 
     public override void _Ready()
     {
@@ -178,18 +228,7 @@ public partial class BigRoom : Node2D
             }
         }
 
-        // Display max and min noise values for debugging
-        float maxval = (from float v in map select v).Max();
-        float minval = (from float v in map select v).Min();
-        GD.Print("Largest Value", maxval);
-        GD.Print("Smallest Value", minval);
-
         GeneratePatterns();
         GenerateMap(map);
     }
 }
-
-
-// Low Value -> Wall or Water i.e impassable terrain
-// High Value -> Dirt Paths or roads i.e. fast moving terrain
-// Medium Value -> Middle of the road i.e. grass patches or sand or whatever default ground
