@@ -34,6 +34,7 @@ public partial class BeekGuy : CharacterBody2D
 	
 	public void EnemyCollision()
 	{
+		GD.Print("Hit");
 		return;
 	}
 	
