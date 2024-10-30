@@ -8,12 +8,16 @@ public partial class BeekGuyArea2d : Area2D
 	BeekGuy beekguy{get; set;}
 	public override void _Ready()
 	{
+		BodyEntered += OnAreaShapeEntered;
 	}
 	
-	public void OnAreaShapeEntered(CollisionObject2D area)
+	public void OnAreaShapeEntered(Node2D area)
 	{
-		//check if enemy then call player hit function
-		GD.Print("Collide");
-		beekguy.EnemyCollision();
+		//The below doesn't work but it should be close if you need to differentiate enemy types
+		//if (area is  RedBlob) // Class of entity, i.e. Rook or Pawn, etc.
+		//{
+			//GD.Print("Collision with slime");
+		//}
+		GD.Print("Collide with Enemy");
 	}
 }

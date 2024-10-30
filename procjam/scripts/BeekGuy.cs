@@ -32,15 +32,9 @@ public partial class BeekGuy : CharacterBody2D
 		return;
 	}
 	
-	public void EnemyCollision()
-	{
-		GD.Print("Hit");
-		return;
-	}
-	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
-	{
+	{		
 		string JsonData = Json.Stringify(playerJSON.GetData());
 		var error = playerJSON.Parse(JsonData);
   		var datareceived = playerJSON.Data;
@@ -51,6 +45,7 @@ public partial class BeekGuy : CharacterBody2D
 		AttackSpeed = (int)dictInDict["AttackSpeed"];
 		Attack = (int)dictInDict["Attack"];
 		Defense = (int)dictInDict["Defense"];
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
