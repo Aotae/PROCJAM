@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cn8nvf71ychui"]
+[gd_scene load_steps=5 format=3 uid="uid://cn8nvf71ychui"]
 
 [ext_resource type="Script" path="res://scripts/BeekGuy.cs" id="1_mrayr"]
 [ext_resource type="PackedScene" uid="uid://b0wcwam5iqybd" path="res://scenes/BeekGuy_sprite.tscn" id="1_yjt8y"]
+[ext_resource type="Script" path="res://scripts/BeekGuyArea2d.cs" id="3_5ri4r"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_reqel"]
 radius = 164.514
@@ -10,13 +11,21 @@ radius = 164.514
 scale = Vector2(0.5, 0.5)
 collision_mask = 4294967295
 script = ExtResource("1_mrayr")
-Speed = 1000
 
 [node name="BeekGuySprite" parent="." instance=ExtResource("1_yjt8y")]
 frame_progress = 0.308523
 
+[node name="Camera2D" type="Camera2D" parent="."]
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(6, 84)
 shape = SubResource("CircleShape2D_reqel")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("beekguy")]
+script = ExtResource("3_5ri4r")
+beekguy = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_reqel")
+
+[connection signal="area_entered" from="Area2D" to="." method="OnAreaEntered"]
+[connection signal="area_shape_entered" from="Area2D" to="." method="OnAreaShapeEntered"]

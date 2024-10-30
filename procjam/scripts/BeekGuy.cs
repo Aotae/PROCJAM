@@ -1,6 +1,8 @@
 using Godot;
 using System;
 using System.Text.Json;
+using System.Collections;
+using System.Collections.Generic;
 
 public partial class BeekGuy : CharacterBody2D
 {
@@ -11,9 +13,11 @@ public partial class BeekGuy : CharacterBody2D
 	public static StringName MoveUp = new StringName("move_up");
 	
 	[Export]
+	public Json playerJSON{get; set;}
+	[Export]
 	public int Health {get; set;} = 100;
 	[Export]
-	public int MoveSpeed {get; set;} = 400;
+	public int MoveSpeed {get; set;} = 10;
 	[Export]
 	public int AttackSpeed {get; set;} = 100;
 	[Export]
@@ -22,15 +26,31 @@ public partial class BeekGuy : CharacterBody2D
 	public int Defense {get; set;} = 100;
 	[Export]
 	public Vector2 ScreenSize = new Vector2(2880,1620);
+	
+	public void AttackWithWeapon()
+	{
+		return;
+	}
+	
+	public void EnemyCollision()
+	{
+		GD.Print("Hit");
+		return;
+	}
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		//open Json and get data
-		using var file = FileAccess.Open("res://player.json", FileAccess.ModeFlags.Read);
-		string jsonString = file.GetAsText();
-		var details = Json.ParseString(jsonString);
-		var data = Json.ParseString(jsonString);
-		//allocate data to local variables
+		string JsonData = Json.Stringify(playerJSON.GetData());
+		var error = playerJSON.Parse(JsonData);
+  		var datareceived = playerJSON.Data;
+		Godot.Collections.Dictionary dict = (Godot.Collections.Dictionary)datareceived;
+		Godot.Collections.Dictionary dictInDict = (Godot.Collections.Dictionary)dict["Player"];
+		Health = (int)dictInDict["Health"];
+		MoveSpeed = (int)dictInDict["Speed"];
+		AttackSpeed = (int)dictInDict["AttackSpeed"];
+		Attack = (int)dictInDict["Attack"];
+		Defense = (int)dictInDict["Defense"];
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
