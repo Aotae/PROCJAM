@@ -8,8 +8,6 @@ public partial class BigRoom : Node2D
 {
     private Vector2I[] neighbors = { Vector2I.Up, Vector2I.Down, Vector2I.Left, Vector2I.Right };
     private Godot.Collections.Dictionary<Vector2I, Array<Vector2I>> Patterns = new Godot.Collections.Dictionary<Vector2I, Array<Vector2I>>();
-    private Vector2I LandAtlas = new Vector2I(0, 0);
-    private Vector2I WaterAtlas = new Vector2I(6, 0);
     [Export] private int PatternId { get; set; } = 0;
     [Export] public int MapSizeX { get; set; } = 10;
     [Export] public int MapSizeY { get; set; } = 10;
@@ -17,7 +15,24 @@ public partial class BigRoom : Node2D
     [Export] private TileMapLayer walls { get; set; }
     [Export] public FastNoiseLite MapNoise = new FastNoiseLite();
     [Export] private TileSet oneBit { get; set; }
+	[Export] private TileSetAtlasSource Atlas {get; set;}
 
+    private float GetTileWeight(Vector2I atlasCoords)
+    {
+        // Convert atlas coordinates to a tile ID
+        int tileId = oneBit.GetCustomDataLayerByName("Weight");  // Get the tile ID for the atlas coordinates
+        
+        // if (tileId != -1)
+        // {
+        //     // Check if the tile has custom data and retrieve the weight
+        //     if (oneBit.TileGetCustomDataCount(tileId) > 0)
+        //     {
+        //         return (float)oneBit.TileGetCustomData(tileId, 0);  // Access the first custom data layer
+        //     }
+        // }
+
+        return 1.0f;  // Default weight if no custom data found
+    }
     private void PrintJaggedArray(Array<Vector2I>[][] jaggedArray)
     {
         for (int i = 0; i < jaggedArray.Length; i++)
@@ -164,7 +179,7 @@ public partial class BigRoom : Node2D
 		{
 			Vector2I current = stack.Pop();
 			Array<Vector2I> currentPossible = tiles[current.X][current.Y];
-			
+
 			if (currentPossible == null || currentPossible.Count == 0)
 			{
 				GD.PrintErr("No possible tiles to propagate at ", current);
@@ -174,12 +189,10 @@ public partial class BigRoom : Node2D
 			foreach (Vector2I neighbor in neighbors)
 			{
 				Vector2I currentNeighbor = current + neighbor;
-
 				if (currentNeighbor.X >= 0 && currentNeighbor.Y >= 0 &&
 					currentNeighbor.X < MapSizeX && currentNeighbor.Y < MapSizeY)
 				{
 					Array<Vector2I> neighborTiles = tiles[currentNeighbor.X][currentNeighbor.Y];
-
 					if (neighborTiles == null || neighborTiles.Count == 0)
 					{
 						GD.PrintErr("Neighbor at ", currentNeighbor, " has no possible tiles.");
@@ -187,7 +200,6 @@ public partial class BigRoom : Node2D
 					}
 
 					bool changed = false;
-
 					foreach (Vector2I tile in neighborTiles.ToList())
 					{
 						bool isCompatible = currentPossible.Any(possibleTile =>
@@ -200,7 +212,7 @@ public partial class BigRoom : Node2D
 						}
 					}
 
-					if (changed)
+					if (changed && neighborTiles.Count > 0)  // Only push if tiles remain
 					{
 						stack.Push(currentNeighbor);
 					}
@@ -208,6 +220,7 @@ public partial class BigRoom : Node2D
 			}
 		}
 	}
+
 
 
     public override void _Ready()
@@ -218,7 +231,7 @@ public partial class BigRoom : Node2D
         MapNoise.NoiseType = FastNoiseLite.NoiseTypeEnum.SimplexSmooth;
         MapNoise.Seed = seed;
         GD.Print("Seed:", MapNoise.Seed);
-
+		// GetTileDataFromAtlas(new Vector2I(1,1));
         // Generate noise values
         for (int i = 0; i < MapSizeX; i++)
         {
