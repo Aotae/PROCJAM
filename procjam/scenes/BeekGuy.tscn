@@ -18,7 +18,6 @@ frame_progress = 0.308523
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(6, 84)
 shape = SubResource("CircleShape2D_reqel")
 
 [node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("beekguy")]
@@ -26,7 +25,6 @@ script = ExtResource("3_5ri4r")
 beekguy = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(6, 84)
 shape = SubResource("CircleShape2D_reqel")
 
 [connection signal="area_entered" from="Area2D" to="." method="OnAreaEntered"]
