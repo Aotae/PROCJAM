@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=4 uid="uid://b0ashiux4yhk8"]
+[gd_scene load_steps=6 format=4 uid="uid://b0ashiux4yhk8"]
 
 [ext_resource type="Script" path="res://Rooms/BigRoom.cs" id="1_o5pcy"]
 [ext_resource type="TileSet" uid="uid://bkoq3473pnrvo" path="res://Rooms/1BitTiles.tres" id="1_p8017"]
 [ext_resource type="Texture2D" uid="uid://cqr1vnwixfqo2" path="res://art/MainMenuBackground.png" id="3_785d7"]
+[ext_resource type="JSON" path="res://data/player.json" id="5_fufyk"]
 [ext_resource type="PackedScene" uid="uid://cn8nvf71ychui" path="res://scenes/BeekGuy.tscn" id="8_klnxi"]
 
 [node name="Room" type="Node2D" node_paths=PackedStringArray("ground", "walls")]
@@ -28,3 +29,4 @@ tile_set = ExtResource("1_p8017")
 tile_set = ExtResource("1_p8017")
 
 [node name="BeekGuy" parent="." instance=ExtResource("8_klnxi")]
+playerJSON = ExtResource("5_fufyk")
