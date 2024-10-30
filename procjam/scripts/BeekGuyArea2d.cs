@@ -13,6 +13,7 @@ public partial class BeekGuyArea2d : Area2D
 	public void OnAreaShapeEntered(CollisionObject2D area)
 	{
 		//check if enemy then call player hit function
+		GD.Print("Collide");
 		beekguy.EnemyCollision();
 	}
 }
