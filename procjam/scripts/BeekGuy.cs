@@ -79,43 +79,45 @@ public partial class BeekGuy : CharacterBody2D
 		{
 			Velocity = Velocity.Normalized() * MoveSpeed;
 			animatedSprite2D.Play();
+
+			// sprite selection
+			if (Velocity.X > 0 && Velocity.Y > 0)
+			{
+				animatedSprite2D.Animation = "FrontRight";
+			}
+			else if (Velocity.X > 0 && Velocity.Y < 0)
+			{
+				animatedSprite2D.Animation = "BackRight";
+			}
+			else if (Velocity.X < 0 && Velocity.Y > 0)
+			{
+				animatedSprite2D.Animation = "FrontLeft";
+			}
+			else if (Velocity.X < 0 && Velocity.Y < 0)
+			{
+				animatedSprite2D.Animation = "BackLeft";
+			}
+			else if (Velocity.X > 0)
+			{
+				animatedSprite2D.Animation = "Right";
+			}
+			else if (Velocity.X < 0)
+			{
+				animatedSprite2D.Animation = "Left";
+			}
+			else if (Velocity.Y > 0)
+			{
+				animatedSprite2D.Animation = "Front";
+			}
+			else if (Velocity.Y < 0)
+			{
+				animatedSprite2D.Animation = "Back";
+			}
 		}
 		else
 		{
 			animatedSprite2D.Stop();
 		}
-		// sprite selection
-		if (Velocity.X > 0 && Velocity.Y > 0)
-		{
-			animatedSprite2D.Animation = "FrontRight";
-		}
-		else if (Velocity.X > 0 && Velocity.Y < 0)
-		{
-			animatedSprite2D.Animation = "BackRight";
-		}
-		else if (Velocity.X < 0 && Velocity.Y > 0)
-		{
-			animatedSprite2D.Animation = "FrontLeft";
-		}
-		else if (Velocity.X < 0 && Velocity.Y < 0)
-		{
-			animatedSprite2D.Animation = "BackLeft";
-		}
-		else if (Velocity.X > 0)
-		{
-			animatedSprite2D.Animation = "Right";
-		}
-		else if (Velocity.X < 0)
-		{
-			animatedSprite2D.Animation = "Left";
-		}
-		else if (Velocity.Y > 0)
-		{
-			animatedSprite2D.Animation = "Front";
-		}
-		else if (Velocity.Y < 0)
-		{
-			animatedSprite2D.Animation = "Back";
-		}
+
 	}
 }
