@@ -14,9 +14,7 @@ public partial class BeekGuyArea2d : Area2D
 		CollisionCooldownTimer = new Timer();
 		CollisionCooldownTimer.WaitTime = CooldownTime;
 		CollisionCooldownTimer.Timeout += OnCollisionCooldownTimeout;
-		CollisionCooldownTimer.Start();
-		GD.Print("Timer start in theory");
-		//! THIS DAMN TIMER WONT START?????????????
+		AddChild(CollisionCooldownTimer);
 
 		//TODO: ONE OF THESE HAS TO SEND WHEN SOMETHING TOUCHES YOU, RIGHT???
 		AreaEntered += OnAreaShapeEntered;
@@ -28,15 +26,13 @@ public partial class BeekGuyArea2d : Area2D
 	
 	public void OnAreaShapeEntered(Node2D area)
 	{
-		// Turned off for now cuz it refuses to run properly
-		//if (!CanCollide)
-		//{
-			//GD.Print("Collision on cooldown");
-			//return;
-		//}
-		
+		if (!CanCollide)
+		{
+			// GD.Print("Collision on cooldown");
+			return;
+		}
 		CanCollide = false;
-		//GD.Print("Collision on cooldown");
+		CollisionCooldownTimer.Start();
 		
 
 		//The below doesn't work but it should be close if you need to differentiate enemy types
