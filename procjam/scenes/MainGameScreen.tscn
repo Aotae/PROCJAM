@@ -70,7 +70,7 @@ texture = ExtResource("1_rb48a")
 playerJSON = ExtResource("5_mb4i4")
 
 [node name="MobTimer" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 3.0
 autostart = true
 
 [node name="MobPath" type="Path2D" parent="."]

@@ -15,7 +15,7 @@ public partial class Pawn : Node2D
 	{
 		// follows player at set speed
 		BeekGuy player = GetNode<BeekGuy>("../BeekGuy");
-		float speed = 80;
+		float speed = 70;
 		float moveAmount = speed * (float)delta;
 		Vector2 moveDirection = (player.Position - Position).Normalized();
 		Position += moveDirection * moveAmount;

@@ -14,10 +14,10 @@ public partial class Queen : Node2D
 	public override void _Process(double delta)
 	{
 		// moves quickly after player
+		// this aint quite it but its pretty funny
 		BeekGuy player = GetNode<BeekGuy>("../BeekGuy");
-		float speed = 80;
+		float speed = 3;
 		float moveAmount = speed * (float)delta;
-		Vector2 moveDirection = (player.Position - Position).Normalized();
-		Position += moveDirection * moveAmount;
+		Position = Position.CubicInterpolate(player.Position, Position, player.Position, moveAmount);
 	}
 }
