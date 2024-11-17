@@ -8,8 +8,6 @@ public partial class BigRoom : Node2D
 {
     private Vector2I[] neighbors = { Vector2I.Up, Vector2I.Down, Vector2I.Left, Vector2I.Right };
     private Godot.Collections.Dictionary<Vector2I, Array<Vector2I>> Patterns = new Godot.Collections.Dictionary<Vector2I, Array<Vector2I>>();
-    private Vector2I LandAtlas = new Vector2I(0, 0);
-    private Vector2I WaterAtlas = new Vector2I(6, 0);
     [Export] private int PatternId { get; set; } = 0;
     [Export] public int MapSizeX { get; set; } = 10;
     [Export] public int MapSizeY { get; set; } = 10;
@@ -17,7 +15,16 @@ public partial class BigRoom : Node2D
     [Export] private TileMapLayer walls { get; set; }
     [Export] public FastNoiseLite MapNoise = new FastNoiseLite();
     [Export] private TileSet oneBit { get; set; }
+	[Export] private TileSetAtlasSource Atlas {get; set;}
 
+    private float GetTileWeight(Vector2I atlasCoords)
+    {
+        // Convert atlas coordinates to a tile ID
+		Atlas = (TileSetAtlasSource)oneBit.GetSource(0);
+		TileData data = Atlas.GetTileData(atlasCoords,0);
+		float weight = (float)data.GetCustomData("Weight");
+        return weight;  // Default weight if no custom data found
+    }
     private void PrintJaggedArray(Array<Vector2I>[][] jaggedArray)
     {
         for (int i = 0; i < jaggedArray.Length; i++)
@@ -139,21 +146,34 @@ public partial class BigRoom : Node2D
 	private void Collapse(Vector2I position, Array<Vector2I>[][] tiles)
 	{
 		var cellTiles = tiles[position.X][position.Y];
-		
 		if (cellTiles == null || cellTiles.Count == 0)
 		{
 			GD.PrintErr("Attempted to collapse an empty cell at ", position);
 			return;
 		}
 
-		int randomIndex = (int)(GD.Randi() % cellTiles.Count);
-		Vector2I chosen = cellTiles[randomIndex];
-		// GD.Print("Chosen tile at ", position, ": ", chosen);
+		// Calculate cumulative weight and choose based on weighted probability
+		float totalWeight = cellTiles.Sum(tile => GetTileWeight(tile));
+		float chosenWeight = (float)(GD.Randf() * totalWeight);
+		
+		Vector2I chosenTile = cellTiles[0];
+		foreach (var tile in cellTiles)
+		{
+			chosenWeight -= GetTileWeight(tile);
+			if (chosenWeight <= 0)
+			{
+				chosenTile = tile;
+				break;
+			}
+		}
 
-		// Set the cell to the chosen tile
-		tiles[position.X][position.Y] = new Array<Vector2I> { chosen };
-		ground.SetCell(position, 0, chosen);
+		// GD.Print("Chosen weighted tile at ", position, ": ", chosenTile);
+		tiles[position.X][position.Y] = new Array<Vector2I> { chosenTile };
+
+		// Place the chosen tile in the TileMapLayer
+		ground.SetCell(position, 0, chosenTile);
 	}
+
 
 	private void PropagateConstraints(Vector2I cellPos, Array<Vector2I>[][] tiles)
 	{
@@ -164,7 +184,7 @@ public partial class BigRoom : Node2D
 		{
 			Vector2I current = stack.Pop();
 			Array<Vector2I> currentPossible = tiles[current.X][current.Y];
-			
+
 			if (currentPossible == null || currentPossible.Count == 0)
 			{
 				GD.PrintErr("No possible tiles to propagate at ", current);
@@ -174,12 +194,10 @@ public partial class BigRoom : Node2D
 			foreach (Vector2I neighbor in neighbors)
 			{
 				Vector2I currentNeighbor = current + neighbor;
-
 				if (currentNeighbor.X >= 0 && currentNeighbor.Y >= 0 &&
 					currentNeighbor.X < MapSizeX && currentNeighbor.Y < MapSizeY)
 				{
 					Array<Vector2I> neighborTiles = tiles[currentNeighbor.X][currentNeighbor.Y];
-
 					if (neighborTiles == null || neighborTiles.Count == 0)
 					{
 						GD.PrintErr("Neighbor at ", currentNeighbor, " has no possible tiles.");
@@ -187,7 +205,6 @@ public partial class BigRoom : Node2D
 					}
 
 					bool changed = false;
-
 					foreach (Vector2I tile in neighborTiles.ToList())
 					{
 						bool isCompatible = currentPossible.Any(possibleTile =>
@@ -200,7 +217,7 @@ public partial class BigRoom : Node2D
 						}
 					}
 
-					if (changed)
+					if (changed && neighborTiles.Count > 0)  // Only push if tiles remain
 					{
 						stack.Push(currentNeighbor);
 					}
@@ -208,6 +225,7 @@ public partial class BigRoom : Node2D
 			}
 		}
 	}
+
 
 
     public override void _Ready()
@@ -218,7 +236,7 @@ public partial class BigRoom : Node2D
         MapNoise.NoiseType = FastNoiseLite.NoiseTypeEnum.SimplexSmooth;
         MapNoise.Seed = seed;
         GD.Print("Seed:", MapNoise.Seed);
-
+		// GetTileDataFromAtlas(new Vector2I(1,1));
         // Generate noise values
         for (int i = 0; i < MapSizeX; i++)
         {

@@ -32,15 +32,9 @@ public partial class BeekGuy : CharacterBody2D
 		return;
 	}
 	
-	public void EnemyCollision()
-	{
-		GD.Print("Hit");
-		return;
-	}
-	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
-	{
+	{		
 		string JsonData = Json.Stringify(playerJSON.GetData());
 		var error = playerJSON.Parse(JsonData);
   		var datareceived = playerJSON.Data;
@@ -51,6 +45,7 @@ public partial class BeekGuy : CharacterBody2D
 		AttackSpeed = (int)dictInDict["AttackSpeed"];
 		Attack = (int)dictInDict["Attack"];
 		Defense = (int)dictInDict["Defense"];
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -84,43 +79,45 @@ public partial class BeekGuy : CharacterBody2D
 		{
 			Velocity = Velocity.Normalized() * MoveSpeed;
 			animatedSprite2D.Play();
+
+			// sprite selection
+			if (Velocity.X > 0 && Velocity.Y > 0)
+			{
+				animatedSprite2D.Animation = "FrontRight";
+			}
+			else if (Velocity.X > 0 && Velocity.Y < 0)
+			{
+				animatedSprite2D.Animation = "BackRight";
+			}
+			else if (Velocity.X < 0 && Velocity.Y > 0)
+			{
+				animatedSprite2D.Animation = "FrontLeft";
+			}
+			else if (Velocity.X < 0 && Velocity.Y < 0)
+			{
+				animatedSprite2D.Animation = "BackLeft";
+			}
+			else if (Velocity.X > 0)
+			{
+				animatedSprite2D.Animation = "Right";
+			}
+			else if (Velocity.X < 0)
+			{
+				animatedSprite2D.Animation = "Left";
+			}
+			else if (Velocity.Y > 0)
+			{
+				animatedSprite2D.Animation = "Front";
+			}
+			else if (Velocity.Y < 0)
+			{
+				animatedSprite2D.Animation = "Back";
+			}
 		}
 		else
 		{
 			animatedSprite2D.Stop();
 		}
-		// sprite selection
-		if (Velocity.X > 0 && Velocity.Y > 0)
-		{
-			animatedSprite2D.Animation = "FrontRight";
-		}
-		else if (Velocity.X > 0 && Velocity.Y < 0)
-		{
-			animatedSprite2D.Animation = "BackRight";
-		}
-		else if (Velocity.X < 0 && Velocity.Y > 0)
-		{
-			animatedSprite2D.Animation = "FrontLeft";
-		}
-		else if (Velocity.X < 0 && Velocity.Y < 0)
-		{
-			animatedSprite2D.Animation = "BackLeft";
-		}
-		else if (Velocity.X > 0)
-		{
-			animatedSprite2D.Animation = "Right";
-		}
-		else if (Velocity.X < 0)
-		{
-			animatedSprite2D.Animation = "Left";
-		}
-		else if (Velocity.Y > 0)
-		{
-			animatedSprite2D.Animation = "Front";
-		}
-		else if (Velocity.Y < 0)
-		{
-			animatedSprite2D.Animation = "Back";
-		}
+
 	}
 }
